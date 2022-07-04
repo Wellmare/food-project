@@ -1,7 +1,12 @@
-import {closeModal, openModal} from './hideShowModal'
+import {closeModal, openModal} from './modal'
+import checkNumInput from './checkNumInput'
+import {postData} from '../services/services'
 
-const forms = () => {
-    const allForms = document.querySelectorAll('form')
+const forms = (formsSelector, modalTimerId, url) => {
+    const allForms = document.querySelectorAll(formsSelector)
+
+    checkNumInput('.num-input')
+
 
     allForms.forEach((form) => {
         bindPostData(form)
@@ -13,13 +18,6 @@ const forms = () => {
         loading: 'img/form/spinner.svg',
     }
 
-    async function postData(url, data) {
-        const res = await fetch(url, {
-            method: 'POST', headers: {'Content-type': 'application/json'}, body: data,
-        })
-
-        return await res.json()
-    }
 
     function bindPostData(form) {
         form.addEventListener('submit', (e) => {
@@ -34,11 +32,10 @@ const forms = () => {
             form.insertAdjacentElement('afterend', statusMessage)
 
             const formData = new FormData(form)
-            console.log(formData)
 
             const json = JSON.stringify(Object.fromEntries(formData.entries()))
 
-            postData('http://localhost:3000/requests', json)
+            postData(url, json)
                 .then((data) => {
                     console.log(data)
                     showThanksModal(messages.success)
@@ -59,7 +56,7 @@ const forms = () => {
         const prevModalDialog = document.querySelector('.modal__dialog')
         prevModalDialog.classList.add('hide')
         prevModalDialog.classList.remove('show')
-        openModal()
+        openModal('.modal', modalTimerId)
 
         const thanksModal = document.createElement('div')
         thanksModal.classList.add('modal__dialog')
@@ -77,7 +74,7 @@ const forms = () => {
             thanksModal.remove()
             prevModalDialog.classList.remove('hide')
             prevModalDialog.classList.add('show')
-            closeModal()
+            closeModal('.modal')
         }, 4000)
     }
 }

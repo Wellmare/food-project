@@ -1,8 +1,6 @@
 import getZero from './getZero'
 
-const timer = () => {
-    const deadline = '2022-05-24:14:27'
-
+const timer = (deadline, timerSelector) => {
     function getTimeRemaining(endTime) {
         const total = Date.parse(endTime) - Date.parse(new Date())
 
@@ -31,6 +29,12 @@ const timer = () => {
         if (getTimeRemaining(endTime).total > 0) {
             timeInterval = setInterval(updateClock, 1000)
             updateClock()
+        } else {
+            if (timeInterval) clearInterval(timeInterval)
+            daysNode.textContent = '00'
+            hoursNode.textContent = '00'
+            minutesNode.textContent = '00'
+            secondsNode.textContent = '00'
         }
 
         function updateClock() {
@@ -40,13 +44,9 @@ const timer = () => {
             hoursNode.textContent = getZero(timeRemainingObject.hours)
             minutesNode.textContent = getZero(timeRemainingObject.minutes)
             secondsNode.textContent = getZero(timeRemainingObject.seconds)
-
-            if (timeRemainingObject.total <= 0) {
-                clearInterval(timeInterval)
-            }
         }
     }
 
-    setClock('.timer', deadline)
+    setClock(timerSelector, deadline)
 }
 export default timer

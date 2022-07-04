@@ -1,4 +1,6 @@
-const menu = () => {
+import axios from 'axios'
+
+const menu = (url) => {
     class MenuCard {
         constructor(src, alt, title, desc, price, parentSelector, ...classes) {
             this.src = src
@@ -54,8 +56,9 @@ const menu = () => {
 //             new MenuCard(img, altimg, title, descr, price, '.menu .container', 'menu__item').render()
 //         })
 //     })
+
     axios
-        .get('http://localhost:3000/menu', {
+        .get(url, {
             json: true,
         })
         .then((res) => {

@@ -1,17 +1,17 @@
 import getZero from "./getZero";
 
-const slider = () => {
-    const allSlides = document.querySelectorAll('.offer__slide')
-    const slider = document.querySelector('.offer__slider')
+const slider = ({container, slide, nextArrow, prevArrow, totalCounter, currentCounter, wrapper, field}) => {
+    const allSlides = document.querySelectorAll(slide)
+    const slider = document.querySelector(container)
 
-    const totalCountSlidesNode = document.querySelector('#total')
-    const currentCountSlidesNode = document.querySelector('#current')
+    const totalCountSlidesNode = document.querySelector(totalCounter)
+    const currentCountSlidesNode = document.querySelector(currentCounter)
 
-    const prevBtnNode = document.querySelector('.offer__slider-prev')
-    const nextBtnNode = document.querySelector('.offer__slider-next')
+    const prevBtnNode = document.querySelector(prevArrow)
+    const nextBtnNode = document.querySelector(nextArrow)
 
-    const slidesWrapperNode = document.querySelector('.offer__slider-wrapper')
-    const slidesFieldNode = document.querySelector('.offer__slider-inner')
+    const slidesWrapperNode = document.querySelector(wrapper)
+    const slidesFieldNode = document.querySelector(field)
 
     const width = window.getComputedStyle(slidesWrapperNode).width.slice(0, -2)
 

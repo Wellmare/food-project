@@ -1,7 +1,7 @@
-const tabs = () => {
-    const tabsNode = document.querySelectorAll('.tabheader__item')
-    const tabsContentNode = document.querySelectorAll('.tabcontent')
-    const tabsParentNode = document.querySelector('.tabheader__items')
+const tabs = (tabsSelector, tabsContentSelector, tabsParentSelector, activeClass) => {
+    const tabsNode = document.querySelectorAll(tabsSelector)
+    const tabsContentNode = document.querySelectorAll(tabsContentSelector)
+    const tabsParentNode = document.querySelector(tabsParentSelector)
 
     function hideTabContent() {
         tabsContentNode.forEach((el) => {
@@ -9,7 +9,7 @@ const tabs = () => {
             el.classList.remove('show', 'fade')
         })
         tabsNode.forEach((el) => {
-            el.classList.remove('tabheader__item_active')
+            el.classList.remove(activeClass)
         })
     }
 
@@ -17,7 +17,7 @@ const tabs = () => {
         tabsContentNode[index].classList.add('show', 'fade')
         tabsContentNode[index].classList.remove('hide')
 
-        tabsNode[index].classList.add('tabheader__item_active')
+        tabsNode[index].classList.add(activeClass)
     }
 
     hideTabContent()
@@ -26,7 +26,7 @@ const tabs = () => {
     tabsParentNode.addEventListener('click', (event) => {
         const target = event.target
 
-        if (target && target.classList.contains('tabheader__item')) {
+        if (target && target.classList.contains(tabsSelector.replace(/\./g, ''))) {
             tabsNode.forEach((el, i) => {
                 if (target === el) {
                     hideTabContent()
